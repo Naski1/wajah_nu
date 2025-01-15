@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hasil Pencocokan Gambar</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        .container {
+            margin-top: 50px;
+        }
+        .img-thumbnail {
+            max-width: 100%;
+            height: auto;
+        }
+        h1, h3 {
+            color: #333;
+        }
+        .back-link {
+            margin-top: 20px;
+        }
+        @keyframes moveFromCenterToLeft {
+            from {
+                transform: translateX(0);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(-50%);
+                opacity: 1;
+            }
+        }
+        @keyframes moveFromCenterToRight {
+            from {
+                transform: translateX(0);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(50%);
+                opacity: 1;
+            }
+        }
+        .animate-left {
+            animation: moveFromCenterToLeft 4s forwards;
+        }
+        .animate-right {
+            animation: moveFromCenterToRight 4s forwards 1s;
+        }
+    </style>
+</head>
+<body>
+    <div class="container text-center">
+        <h1>Hasil Pencocokan Gambar</h1>
+        <div class="row justify-content-center align-items-center">
+            <div class="col-md-4 animate-left">
+                <h3>Foto Anda</h3>
+                <img src="{{ url_for('static', filename='uploads/' + user_image) }}" alt="User Image" class="img-thumbnail">
+            </div>
+            <div class="col-md-4 animate-right">
+                <h3>Foto Ulama yang Mirip</h3>
+                <img src="{{ url_for('static', filename='reference_images/' + best_match['ref_image']) }}" alt="Ulama Image" class="img-thumbnail">
+                <p>Nama Ulama: {{ best_match['ulama_name'] }}</p>
+                <p>Persentase Kemiripan: {{ best_match['similarity_percentage'] }}%</p>
+                {% if message %}
+                    <p class="text-warning"><strong>{{ message }}</strong></p>
+                {% endif %}
+            </div>
+        </div>
+        <a href="{{ url_for('index') }}" class="btn btn-primary back-link">Kembali ke halaman awal</a>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
